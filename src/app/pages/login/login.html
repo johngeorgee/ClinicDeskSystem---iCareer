@@ -1,0 +1,49 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="login-header">
+      <div class="brand-icon">
+        <mat-icon>local_hospital</mat-icon>
+      </div>
+      <mat-card-title class="login-title">ClinicDesk</mat-card-title>
+      <mat-card-subtitle class="login-subtitle">Welcome back! Please login to your account.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="login-content">
+      <form #loginForm="ngForm" (ngSubmit)="login()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width login-field">
+          <mat-label>Username</mat-label>
+          <input matInput name="username" [(ngModel)]="username" required placeholder="Enter username" autocomplete="username">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width login-field">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="password" required placeholder="Enter password" autocomplete="current-password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width login-field">
+          <mat-label>Role</mat-label>
+          <mat-select name="role" [(ngModel)]="selectedRole" required>
+            <mat-option *ngFor="let role of roles" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>badge</mat-icon>
+          <mat-error>Role is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-hint">Use receptionist / receptionist123, doctor / doctor123, or manager / manager123.</div>
+
+        @if (errorMessage) {
+          <div class="form-error">{{ errorMessage }}</div>
+        }
+
+        <button mat-flat-button color="primary" type="submit" class="login-button" [disabled]="!loginForm.valid">
+          Login to Dashboard
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
