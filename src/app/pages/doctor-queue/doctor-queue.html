@@ -1,0 +1,109 @@
+<div class="page-container">
+  
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Doctor Queue</h1>
+      <p class="page-subtitle">Today's assigned patients.</p>
+    </div>
+  </div>
+
+  <div class="queue-layout">
+    
+    <!-- Left Column: Patient List -->
+    <div class="queue-list-column">
+      @if (queueItems.length === 0) {
+        <mat-card class="empty-card">
+          <mat-card-content class="empty-state">
+            <mat-icon class="empty-icon">check_circle_outline</mat-icon>
+            <p>No patients in the queue.</p>
+          </mat-card-content>
+        </mat-card>
+      } @else {
+        <div class="queue-list">
+          @for (item of queueItems; track item.patientId) {
+            <mat-card 
+              class="queue-card" 
+              [class.selected]="selectedItem?.patientId === item.patientId"
+              (click)="selectItem(item)"
+              matRipple>
+              <mat-card-content>
+                <div class="queue-card-header">
+                  <div class="patient-name">{{ item.name }}</div>
+                  <div class="appointment-time">{{ item.appointmentTime }}</div>
+                </div>
+                <div class="queue-card-body">
+                  <p class="patient-id"><mat-icon>badge</mat-icon> {{ item.nationalId }}</p>
+                  <p class="patient-dept"><mat-icon>local_hospital</mat-icon> {{ item.department }}</p>
+                </div>
+                <div class="queue-card-footer">
+                  <mat-chip class="status-chip" [ngClass]="item.status.toLowerCase().replace( ' ', '-')">
+                    {{ item.status }}
+                  </mat-chip>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Right Column: Patient Details -->
+    <div class="queue-details-column">
+      @if (selectedItem) {
+        <mat-card class="details-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar class="details-avatar">account_circle</mat-icon>
+            <mat-card-title>{{ selectedItem.name }}</mat-card-title>
+            <mat-card-subtitle>National ID: {{ selectedItem.nationalId }}</mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content class="details-content">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Department</span>
+                <span class="info-value">{{ selectedItem.department }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Assigned Doctor</span>
+                <span class="info-value">{{ selectedItem.assignedDoctor }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Status</span>
+                <span class="info-value">
+                  <mat-chip class="status-chip" [ngClass]="selectedItem.status.toLowerCase().replace(' ', '-')">
+                    {{ selectedItem.status }}
+                  </mat-chip>
+                </span>
+              </div>
+            </div>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <h3 class="section-title">Consultation Notes</h3>
+            <mat-form-field appearance="outline" class="notes-field">
+              <mat-label>Enter notes...</mat-label>
+              <textarea matInput rows="6" [(ngModel)]="editingNotes" placeholder="Record patient symptoms, diagnosis, and treatment plan here..."></textarea>
+            </mat-form-field>
+          </mat-card-content>
+
+          <mat-card-actions align="end" class="details-actions">
+            <button mat-stroked-button color="primary" (click)="saveNotes()">
+              Save Notes
+            </button>
+            <button mat-flat-button color="primary" (click)="completeVisit()">
+              <mat-icon>done_all</mat-icon>
+              Complete Visit
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      } @else {
+        <div class="no-selection-state">
+          <mat-icon class="no-selection-icon">person_search</mat-icon>
+          <p>Select a patient from the queue to view details.</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>
