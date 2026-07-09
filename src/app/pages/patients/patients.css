@@ -1,0 +1,70 @@
+.add-button {
+  padding: 0 24px;
+  height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.add-button mat-icon {
+  margin-right: 4px;
+}
+
+.search-actions button {
+  min-width: 96px;
+  border-radius: 999px;
+}
+
+.action-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-card {
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border: 1px solid var(--color-border);
+}
+
+.search-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px !important;
+}
+
+.search-field {
+  width: 300px;
+}
+
+.search-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.patients-table {
+  width: 100%;
+}
+
+.patient-row:hover {
+  background: var(--color-bg);
+}
+
+.actions-col {
+  width: 120px;
+  text-align: right;
+}

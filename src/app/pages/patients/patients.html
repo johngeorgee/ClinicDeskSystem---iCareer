@@ -1,0 +1,108 @@
+<div class="page-container">
+  
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Patients</h1>
+      <p class="page-subtitle">Search existing patients or register a new patient.</p>
+    </div>
+    <button mat-flat-button color="primary" class="add-button" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon>
+      Add Patient
+    </button>
+  </div>
+
+  <!-- Search Card -->
+  <mat-card class="search-card">
+    <mat-card-content class="search-content">
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <mat-label>National ID</mat-label>
+        <mat-icon matPrefix>badge</mat-icon>
+        <input matInput placeholder="Enter National ID..." [(ngModel)]="searchQuery" (keyup.enter)="filterPatients()">
+      </mat-form-field>
+      <div class="search-actions">
+        <button mat-flat-button color="primary" (click)="filterPatients()">
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+        <button mat-stroked-button (click)="clearSearch()">
+          Clear
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Table Card -->
+  <mat-card class="table-card">
+    @if (filteredPatients.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">person_off</mat-icon>
+        <p>No patients found.</p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table mat-table [dataSource]="filteredPatients" class="patients-table">
+          
+          <!-- National ID Column -->
+          <ng-container matColumnDef="nationalId">
+            <th mat-header-cell *matHeaderCellDef> National ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+          </ng-container>
+
+          <!-- Full Name Column -->
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef> Patient Name </th>
+            <td mat-cell *matCellDef="let element"> 
+              <strong>{{ element.firstName }} {{ element.lastName }}</strong> 
+            </td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+            <td mat-cell *matCellDef="let element"> {{ element.phone }} </td>
+          </ng-container>
+
+          <!-- Department Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef> Department </th>
+            <td mat-cell *matCellDef="let element"> {{ element.department || 'N/A' }} </td>
+          </ng-container>
+
+          <!-- Assigned Doctor Column -->
+          <ng-container matColumnDef="assignedDoctor">
+            <th mat-header-cell *matHeaderCellDef> Assigned Doctor </th>
+            <td mat-cell *matCellDef="let element"> {{ element.assignedDoctor || 'N/A' }} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Current Status </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip class="status-chip" [ngClass]="(element.status || '').toLowerCase().replace(' ', '-')">
+                {{ element.status || 'Unknown' }}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="actions-col"> Actions </th>
+            <td mat-cell *matCellDef="let element" class="actions-col">
+              <button mat-icon-button color="primary" class="action-button" (click)="openEditDialog(element)" aria-label="Edit patient">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" class="action-button" (click)="openDeleteDialog(element)" aria-label="Delete patient">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="patient-row"></tr>
+        </table>
+      </div>
+    }
+  </mat-card>
+
+</div>
