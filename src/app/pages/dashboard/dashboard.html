@@ -1,0 +1,135 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Dashboard Overview</h1>
+      <p class="page-subtitle">Welcome back! Here's what's happening at the clinic today.</p>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <app-stat-card
+      title="Patients Today"
+      [value]="patientsToday"
+      icon="👥"
+      trend="12% vs last week"
+      trendDirection="up"
+    ></app-stat-card>
+
+    <app-stat-card
+      title="Waiting"
+      [value]="waiting"
+      icon="⏳"
+      trend="3 patients"
+      trendDirection="neutral"
+    ></app-stat-card>
+
+    <app-stat-card
+      title="In Consultation"
+      [value]="inConsultation"
+      icon="🩺"
+      trend="On schedule"
+      trendDirection="neutral"
+    ></app-stat-card>
+
+    <app-stat-card
+      title="Completed"
+      [value]="completed"
+      icon="✅"
+      trend="5% vs yesterday"
+      trendDirection="up"
+    ></app-stat-card>
+
+    <app-stat-card
+      title="Doctors Available"
+      [value]="doctorsAvailable"
+      icon="👨‍⚕️"
+      trend="2 on leave"
+      trendDirection="down"
+    ></app-stat-card>
+
+    <app-stat-card
+      title="Doctors Busy"
+      [value]="doctorsBusy"
+      icon="🔴"
+      trend="At capacity"
+      trendDirection="neutral"
+    ></app-stat-card>
+  </div>
+
+  <!-- Charts and Panels -->
+  <div class="charts-grid">
+    <!-- Visits by Doctor Chart -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Visits by Doctor</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            [data]="doctorVisitsChartData"
+            [options]="doctorVisitsChartOptions"
+            [type]="'bar'"
+          >
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Patient Status Chart -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Overall Appointment Status</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            [data]="patientStatusChartData"
+            [options]="patientStatusChartOptions"
+            [type]="'doughnut'"
+          >
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Activities Panel -->
+    <mat-card class="activities-card">
+      <mat-card-header>
+        <mat-card-title>Recent Activities</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activity-list">
+          @for (activity of recentActivities; track activity.id) {
+            <div class="activity-item">
+              <div class="activity-icon" [ngClass]="activity.status">
+                <mat-icon>
+                  @if (activity.status === 'completed') { check_circle }
+                  @else if (activity.status === 'scheduled') { event }
+                  @else if (activity.status === 'in-progress') { pending }
+                  @else { cancel }
+                </mat-icon>
+              </div>
+              <div class="activity-details">
+                <p class="activity-title">
+                  {{ activity.summary }}
+                </p>
+                <p class="activity-meta">
+                  {{ activity.type }} •
+                  <span class="status-badge" [ngClass]="activity.status">
+                    {{ activity.status | titlecase }}
+                  </span>
+                </p>
+              </div>
+              <div class="activity-time">
+                {{ activity.time | date:'MMM d' }}
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
