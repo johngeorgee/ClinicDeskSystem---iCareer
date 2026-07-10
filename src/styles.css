@@ -187,36 +187,58 @@ textarea {
   min-height: 28px;
   padding: 4px 10px;
   border-radius: 999px;
+  border: 1px solid var(--status-chip-border-color, transparent);
   font-weight: 600;
   letter-spacing: 0.02em;
   font-size: 0.75rem;
   text-transform: uppercase;
+  background-color: transparent !important;
+  color: inherit !important;
 }
 
-.status-chip.scheduled,
+.status-chip .mdc-evolution-chip__text-label {
+  color: inherit !important;
+}
+
+.status-chip.scheduled {
+  --mdc-chip-elevated-container-color: rgba(245, 158, 11, 0.15);
+  --mdc-chip-label-text-color: var(--color-warning);
+  --status-chip-border-color: rgba(245, 158, 11, 0.35);
+  background-color: var(--mdc-chip-elevated-container-color) !important;
+  color: var(--mdc-chip-label-text-color) !important;
+}
+
+.status-chip.checked-in,
 .status-chip.in-progress {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--color-warning);
-}
-
-.status-chip.checked-in {
-  background: rgba(96, 165, 250, 0.15);
-  color: var(--color-primary-light);
+  --mdc-chip-elevated-container-color: rgba(59, 130, 246, 0.15);
+  --mdc-chip-label-text-color: var(--color-primary);
+  --status-chip-border-color: rgba(59, 130, 246, 0.35);
+  background-color: var(--mdc-chip-elevated-container-color) !important;
+  color: var(--mdc-chip-label-text-color) !important;
 }
 
 .status-chip.in-consultation {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-primary);
+  --mdc-chip-elevated-container-color: rgba(37, 99, 235, 0.14);
+  --mdc-chip-label-text-color: #1d4ed8;
+  --status-chip-border-color: rgba(37, 99, 235, 0.35);
+  background-color: var(--mdc-chip-elevated-container-color) !important;
+  color: var(--mdc-chip-label-text-color) !important;
 }
 
 .status-chip.completed {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--color-success);
+  --mdc-chip-elevated-container-color: rgba(16, 185, 129, 0.15);
+  --mdc-chip-label-text-color: var(--color-success);
+  --status-chip-border-color: rgba(16, 185, 129, 0.35);
+  background-color: var(--mdc-chip-elevated-container-color) !important;
+  color: var(--mdc-chip-label-text-color) !important;
 }
 
 .status-chip.cancelled {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--color-danger);
+  --mdc-chip-elevated-container-color: rgba(239, 68, 68, 0.15);
+  --mdc-chip-label-text-color: var(--color-danger);
+  --status-chip-border-color: rgba(239, 68, 68, 0.35);
+  background-color: var(--mdc-chip-elevated-container-color) !important;
+  color: var(--mdc-chip-label-text-color) !important;
 }
 
 @media (max-width: 768px) {

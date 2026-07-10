@@ -194,6 +194,61 @@ export class PatientDialog {
   formData: any = { ...this.data.patient };
   errorMessage = '';
 
+  /*
+  1. Report
+        Feature
+
+        Patient Management → Edit Patient
+
+        Bug Description
+
+        When editing an existing patient's information through the Edit Patient dialog and clicking Save, the dialog closed successfully, but the updated information was not reflected in the Patients table. The old values continued to be displayed until the page was manually refreshed.
+
+  2. Expected Output
+
+      After clicking Save:
+
+      The selected patient's information should be updated.
+      The Patients table should immediately display the modified values.
+      No page refresh should be required.
+
+  3. What's Really Shown
+
+      Observed behavior:
+
+      The edit dialog closed successfully.
+      No error messages appeared.
+      The Patients table continued displaying the old patient information.
+      Changes only appeared after manually refreshing or reloading the data.
+  
+  4. Fixing Steps
+      Step 1 : Verified that the edit dialog returned the updated patient object after clicking Save. 
+      Step 2 : Checked the update logic inside MockDataService.
+        - Found that the edited object was being modified locally, but the service data was not replacing the original patient record correctly.
+        - Updated the service to replace the existing patient using its unique identifier. 
+      Step 3 : Reviewed the Patients component.
+        - Found that the Material Table data source was not refreshed after updating the patient.
+        - Updated the component to reload or refresh the data source immediately after a successful update.
+      Step 4 : Retested multiple edit operations.
+
+        * Verified:
+        - Edit patient name
+        - Edit phone number
+        - Edit department
+        - Edit assigned doctor
+        Confirmed that every modification was reflected instantly in the table.
+
+  5. Real Result After Fix
+
+      After implementing the fix:
+
+      - Patient information updates correctly.
+      - Material Table refreshes immediately.
+      - No page reload is required.
+      - MockDataService remains synchronized with the displayed data.
+      - Multiple consecutive edits work correctly without inconsistencies.     
+   */
+
   save() {
     // Validate uniqueness of National ID on Add
     if (!this.data.isEdit) {
